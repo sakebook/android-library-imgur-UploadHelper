@@ -1,4 +1,4 @@
-android_library_imguruploadhelper
+android-library-imgur-UploadHelper
 =================================
 
 android image uplaod helper on imgur
