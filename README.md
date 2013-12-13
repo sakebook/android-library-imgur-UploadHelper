@@ -11,7 +11,9 @@ How to use
 2.import project and set library
 
 3.sample
-~~~java:SampleActvity.class
+
+
+```Java:SampleActvity.java
 public class SampleActivity extends Activity implements OnClickListener, UploadTaskCallback {
 	
 	@Override
@@ -59,5 +61,5 @@ public class SampleActivity extends Activity implements OnClickListener, UploadT
 	public void cancel(String message) {
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 	}
-~~~
-
+}
+```
