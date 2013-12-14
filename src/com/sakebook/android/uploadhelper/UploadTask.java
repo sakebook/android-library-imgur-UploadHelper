@@ -225,7 +225,6 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
 				Log.i(Const.TAG, "task closeDialog");
 				e.printStackTrace();
 			}
-			dialog = null;
 			isShowDialog = false;
 		}
 	}
