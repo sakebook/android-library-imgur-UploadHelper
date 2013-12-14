@@ -28,9 +28,7 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
 	private ProgressDialog dialog = null;
 	private boolean isShowDialog = false;
 	private String mTitle = "Please wait";
-	private String mMessage = "Loading data...";
-	
-	private static String UPLOAD_URL = "https://api.imgur.com/3/image";
+	private String mMessage = "Uploading data...";
 	
 	/**
 	 * default constract
@@ -56,7 +54,6 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
 		this.mMessage = message;
 	}
 
-	/* onPostExecute‚ÍŒÄ‚Î‚ê‚¸‚É—ˆ‚é */
 	@Override
 	protected void onCancelled() {
 		super.onCancelled();
@@ -99,7 +96,7 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
 		    dialog.setTitle(mTitle);
 		    dialog.setMessage(mMessage);
 		    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		    dialog.setCancelable(true);
+		    dialog.setCancelable(false);
 		    dialog.setOnCancelListener(this);
 		    dialog.setMax(100);
 		    dialog.setProgress(0);
@@ -126,7 +123,6 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
             @Override
             public void run() {
     			for(int i=0; i<5; i++){
-    				/* ‰æ–Ê‚ðƒ^ƒbƒ`‚³‚ê‚é‚È‚Ç */
 					if(isCancelled()){
 						break;
 			        }
@@ -152,7 +148,7 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
         InputStream responseIn = null;
 
 		try {
-            conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
+            conn = (HttpURLConnection) new URL(Const.UPLOAD_URL).openConnection();
             conn.setDoOutput(true);
 
             ImgurAuthorization.getInstance().addToHttpURLConnection(mContext, conn);
