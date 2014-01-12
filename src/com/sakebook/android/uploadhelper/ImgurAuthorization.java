@@ -22,8 +22,6 @@ public class ImgurAuthorization {
 
     private static ImgurAuthorization INSTANCE;
 
-    static final String SHARED_PREFERENCES_NAME = "upload_helper_pref";
-    
     private ImgurAuthorization() {}
 
     public static ImgurAuthorization getInstance() {
@@ -33,12 +31,12 @@ public class ImgurAuthorization {
     }
 
     public boolean isLoggedIn(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0);
+        SharedPreferences prefs = context.getSharedPreferences(Const.SHARED_PREFERENCES_NAME, 0);
         return !TextUtils.isEmpty(prefs.getString("access_token", null));
     }
 
     public void addToHttpURLConnection(Context context, HttpURLConnection conn) {
-        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0);
+        SharedPreferences prefs = context.getSharedPreferences(Const.SHARED_PREFERENCES_NAME, 0);
         String accessToken = prefs.getString("access_token", null);
 
         if (!TextUtils.isEmpty(accessToken)) {
@@ -50,7 +48,7 @@ public class ImgurAuthorization {
     }
 
     public void saveRefreshToken(Context context, String refreshToken, String accessToken, long expiresIn) {
-        context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0)
+        context.getSharedPreferences(Const.SHARED_PREFERENCES_NAME, 0)
                 .edit()
                 .putString("access_token", accessToken)
                 .putString("refresh_token", refreshToken)
@@ -59,7 +57,7 @@ public class ImgurAuthorization {
     }
 
     public String requestNewAccessToken(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0);
+        SharedPreferences prefs = context.getSharedPreferences(Const.SHARED_PREFERENCES_NAME, 0);
         String refreshToken = prefs.getString("refresh_token", null);
 
         if (refreshToken == null) {
@@ -72,7 +70,7 @@ public class ImgurAuthorization {
 
         HttpURLConnection conn = null;
         try {
-            conn = (HttpURLConnection) new URL("https://api.imgur.com/oauth2/token").openConnection();
+            conn = (HttpURLConnection) new URL(Const.OAUTH_URL).openConnection();
             conn.setDoOutput(true);
             conn.setRequestProperty("Authorization", "Client-ID " + Const.CLIENT_ID);
 
@@ -95,7 +93,6 @@ public class ImgurAuthorization {
                 in.close();
             }
             else {
-                Log.i(Const.TAG, "responseCode=" + conn.getResponseCode());
                 InputStream errorStream = conn.getErrorStream();
                 StringBuilder sb = new StringBuilder();
                 Scanner scanner = new Scanner(errorStream);
@@ -132,7 +129,7 @@ public class ImgurAuthorization {
         String tokenType        = root.getString("token_type");
         String accountUsername  = root.getString("account_username");
 
-        context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0)
+        context.getSharedPreferences(Const.SHARED_PREFERENCES_NAME, 0)
                 .edit()
                 .putString("access_token", accessToken)
                 .putString("refresh_token", refreshToken)
@@ -143,10 +140,9 @@ public class ImgurAuthorization {
     }
 
     public void logout(Context context) {
-        context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0)
+        context.getSharedPreferences(Const.SHARED_PREFERENCES_NAME, 0)
                 .edit()
                 .clear()
                 .commit();
     }
-
 }

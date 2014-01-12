@@ -78,7 +78,7 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
 	@Override
 	protected void onPostExecute(String rerult) {
 		super.onPostExecute(rerult);
-		Log.i(Const.TAG, "task onPostExecute------------------------------------");
+		Log.i(Const.TAG, "task onPostExecute");
 		closeDialog();
 		if (!TextUtils.isEmpty(rerult)) {
 			mCallback.success(rerult);
@@ -164,7 +164,6 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
                 return onInput(responseIn);
             }
             else {
-                Log.i(Const.TAG, "responseCode=" + conn.getResponseCode());
                 responseIn = conn.getErrorStream();
                 StringBuilder sb = new StringBuilder();
                 Scanner scanner = new Scanner(responseIn);
@@ -211,7 +210,8 @@ public class UploadTask extends AsyncTask<Uri, Integer, String> implements OnCan
 
         JSONObject root = new JSONObject(sb.toString());
         String id = root.getJSONObject("data").getString("id");
-        String deletehash = root.getJSONObject("data").getString("deletehash");
+        @SuppressWarnings("unused")
+		String deletehash = root.getJSONObject("data").getString("deletehash");
 
 //		Log.i(Const.TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
 		return id;
