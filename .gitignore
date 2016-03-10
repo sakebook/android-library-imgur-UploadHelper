@@ -28,7 +28,6 @@ proguard/
 *.iws
 .idea/
 
-/build
 /.gradle
 *.iml
 .gradle
@@ -37,3 +36,4 @@ proguard/
 .DS_Store
 /build
 /captures
+private.properties
