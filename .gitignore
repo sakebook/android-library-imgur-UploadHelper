@@ -27,3 +27,13 @@ proguard/
 *.ipr
 *.iws
 .idea/
+
+/build
+/.gradle
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
